@@ -1,8 +1,10 @@
 const app = require('express')();
 const consign = require('consign');
 
-consign({ cwd: 'src'})
+consign({ cwd: 'src',verbose: false })
     .include('./config/middleware.js')
+    .then('./routes')
+    .then('./config/routes.js')
     .into(app);
 
 app.get('/' ,(req,res) => {
@@ -10,16 +12,5 @@ app.get('/' ,(req,res) => {
 
 });
 
-app.get('/users', (req,res) => {
-    const users = [
-        {name: 'Jon Doe', mail: 'jon@mail.com'}
-    ];
-    res.status(200).json(users)
-})
-
-app.post('/users', (req,res) =>{
-    res.status(201).json(req.body);
-
-})
 
 module.exports = app;

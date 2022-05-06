@@ -1,0 +1,13 @@
+version: "3"
+services:
+
+  financial-db:
+    image: postgres:11
+    container_name: financial-db
+    restart: always
+    environment:
+     - POSTGRES_DB=financial-db
+     - POSTGRES_USER=admin
+     - POSTGRES_PASSWORD=123456
+    ports:
+     - 5434:5432
