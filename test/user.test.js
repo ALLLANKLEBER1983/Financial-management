@@ -31,3 +31,22 @@ test('Não deve inserir usuário sem nome', () =>{
     })
 
 })
+
+test('Não deve inserir usuário sem email', async() => {
+    const result =  await request(app).post('/users')
+    .send({name: 'Walter Mitty',passwd:'123456'})
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBe('email é um atributo obrigatório')
+
+})
+
+test('Não deve inserir usuário sem senha', (done) => {
+    return request(app).post('/users')
+    .send({name: 'Walter Mitty', mail:'rrr@email.com'})
+    .then((res) => {
+        expect(res.status).toBe(400);
+        expect(res.body.error).toBe('senha é um atributo obrigatório');
+        done();
+    }).catch(err => done.fail(err));
+
+})
