@@ -17,3 +17,13 @@ test('Deve inserir uma conta com sucesso', () => {
         expect(result.body.name).toBe('Acc #1');
     });
 })
+
+test('Deve listar todas contas', () => {
+    return app.db('accounts')
+    .insert({ name: 'Acc #1', user_id:user.id})
+    .then(() => req(app).get(MAIN_ROUT))
+    .then((res) => {
+        expect(res.status).toBe(200);
+        expect(res.body.length).toBeGreaterThan(0)
+    })
+})
