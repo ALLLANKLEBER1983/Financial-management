@@ -27,3 +27,16 @@ test('Deve listar todas contas', () => {
         expect(res.body.length).toBeGreaterThan(0)
     })
 })
+
+test('Deve retornar uma conta por id', () => {
+    return app.db('accounts')
+    .insert({ name: 'Acc by id', user_id:user.id}, ['id'])
+    .then(acc => req(app).get(`${MAIN_ROUT}/${acc[0].id}`))
+    .then((res) => {
+        expect(res.status).toBe(200);
+        expect(res.body.name).toBe('Acc by id');
+        expect(res.body.user_id).toBe(user.id)
+
+    })
+
+})
