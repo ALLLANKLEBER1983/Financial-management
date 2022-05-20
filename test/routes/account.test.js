@@ -40,3 +40,14 @@ test('Deve retornar uma conta por id', () => {
     })
 
 })
+
+test('Deve alterar uma conta', () => {
+    return app.db('accounts')
+    .insert({ name: 'Acc to Update', user_id:user.id}, ['id'])
+    .then(acc => req(app).put(`${MAIN_ROUT}/${acc[0].id}`)
+        .send({name: 'Acc Update'}))
+    .then((res) => {
+        expect(res.status).toBe(200);
+        expect(res.body.name).toBe('Acc Update')
+        })
+})
