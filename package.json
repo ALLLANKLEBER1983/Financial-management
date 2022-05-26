@@ -7,7 +7,7 @@
     "start": "node src/Server.js",
     "test": "jest",
     "lint": "eslint src/** test/**  --fix",
-    "secure-mode": "jest --watch --verbose=false"
+    "secure-mode": "jest --watch --verbose=true"
   },
   "keywords": [],
   "author": "",

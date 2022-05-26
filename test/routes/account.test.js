@@ -18,6 +18,15 @@ test('Deve inserir uma conta com sucesso', () => {
     });
 })
 
+test('Não deve inserir uma conta sem nome', () => {
+    return req(app).post(MAIN_ROUT)
+    .send({user_id:user.id})
+    .then((result) => {
+        expect(result.status).toBe(400);
+        expect(result.body.error).toBe('Nome é um atributo obrigatório');
+    });
+})
+
 test('Deve listar todas contas', () => {
     return app.db('accounts')
     .insert({ name: 'Acc #1', user_id:user.id})
@@ -50,4 +59,13 @@ test('Deve alterar uma conta', () => {
         expect(res.status).toBe(200);
         expect(res.body.name).toBe('Acc Update')
         })
+})
+
+test('Deve remover uma conta', () => {
+    return app.db('accounts')
+    .insert({ name: 'Acc to remove', user_id:user.id}, ['id'])
+    .then(acc => req(app).delete(`${MAIN_ROUT}/${acc[0].id}`))
+    .then((res) => {
+        expect(res.status).toBe(204);
+    });
 })
